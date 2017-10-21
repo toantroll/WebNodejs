@@ -12,6 +12,17 @@ import IndexView from './components/view_component/index';
 import Single from './components/view_component/single/single';
 import Category from './components/view_component/category/category';
 import PathRoute from './path_route';
+import config from './config';
+import localStorage from 'local-storage';
+
+function requireAuth(nextState, replace) {
+  if (!checkAuth()) {
+    replace({
+      pathname: '/admin/login'
+    })
+  }
+}
+
 
 const routes = (
   <Route path="/">
@@ -22,11 +33,9 @@ const routes = (
 	<Route path="test" component={TestPage}/>
 
     <Route path="/admin/">
-      <IndexRoute component={IndexPage}/>
-      <Route path="athlete/:id" component={AthletePage}/>
   	<Route path="login" component={LoginPage}/>
-  	<Route path="dashboard" component={DashBoardPage}/>
-    <Route path="dashboard/:route" component={DashBoardPage}/>
+  	<Route path="dashboard" component={DashBoardPage} />
+    <Route path="dashboard/:route" component={DashBoardPage} />
   	<Route path="test" component={TestPage}/>
       <Route path="*" component={NotFoundPage}/>
     </Route>

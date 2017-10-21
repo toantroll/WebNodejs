@@ -1,6 +1,6 @@
 const config = {
 	secret: 'sd73Ssd87',
-	cookieKey: 'nppToken',
+	cookieKey: 'shoptoken',
 	//connectionString: 'mongodb://127.0.0.1:27017/shoes_shop',
 	connectionString: 'mongodb://toantroll2305:anlolnhe@ds147544.mlab.com:47544/shoes_shop',
 	tel:'01628778134',

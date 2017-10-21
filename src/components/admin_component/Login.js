@@ -9,7 +9,7 @@ export default class LoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
-		this.submitLogin = this.submitLogin.bind(this);
+		this.login = this.login.bind(this);
 		this.state = {loginName: '',
 									password: ''};
 	}
@@ -24,7 +24,7 @@ export default class LoginPage extends React.Component {
 		console.log(this.state);
 	}
 
-	submitLogin(e){
+	login(e){
 		e.preventDefault();
 		$.ajax({
 			 url: '/auth',
@@ -33,11 +33,11 @@ export default class LoginPage extends React.Component {
 			 data: this.state,
 			 cache: false,
 			 success: function(data) {
-				 if(data.auth){
-					 localStorage.set('nppToken', data.token);
-					//send to Dashboard
-					window.location = '/admin/dashboard';
+				  if(data.auth){
+				 	 localStorage.set('shoptoken', data.token);
+				 	 window.location = '/admin/dashboard/manage-category';
 				 }
+				console.log(data);
 			 }.bind(this),
 			 error: function(xhr, status, err) {
 				 console.error('this.props.url', status, err.toString());
@@ -56,7 +56,7 @@ export default class LoginPage extends React.Component {
 	</a>
 </div>
 <div className="content">
-	<form className="login-form" action="/auth" method="post" onSubmit={this.submitLogin}>
+	<form className="login-form" action="/auth" method="post" onSubmit={this.login}>
 		<h3 className="form-title">Sign In</h3>
 		<div className="alert alert-danger display-hide">
 			<button className="close" data-close="alert"></button>

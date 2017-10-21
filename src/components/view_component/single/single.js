@@ -9,6 +9,7 @@ import IndexView from '../index/index';
 import Loading from'../Loading';
 
 
+
 export default class Single extends React.Component {
   constructor(props) {
     super(props);

@@ -70,7 +70,8 @@ router.route('/get-product/:first/:rows/:sortBy/:sortType')
           // p.name = result[i].name;
           // p.price = result[i].price;
           // p.webPrice = result[i].webprice;
-          pAray.push({id:result[i]._id, image:result[i].img[0], name:result[i].name, price:result[i].price, webPrice:result[i].webprice});
+          pAray.push({id:result[i]._id, image:result[i].img[0], name:result[i].name,
+             price:result[i].price, webPrice:result[i].webprice, originPrice: result[i].originprice});
         }
         resData.data = pAray;
         res.json(resData);
@@ -158,7 +159,7 @@ router.route('/updatecategory').post(function(req,res){
       if(data.cateId === '0'){
         //create sub cate
         const query ={'_id':new ObjectID(data.parent)};
-        const updateData = {'$set':{'sub_cate.$':c}};
+        const updateData = {'$push':{'sub_cate':c}};
         categoryDocument.updateOne(query, updateData).then(function(result){
           res.json('OK');
         }).catch(function(e){console.log(e);res.json('Update Error'); return;});
@@ -233,9 +234,14 @@ router.route('/product').post(function(req,res){
     //get data from form-data
     const data = req.body;
     const common = new Common();
-    console.log(data.id);
     if(common.isEmpty(data.id)){
       res.json('Data Error');
+      return;
+    }
+
+    if(!common.isNumber(data.price) || !common.isNumber(data.webPrice) || !common.isNumber(data.originPrice)){
+      console.log(data.price+', '+ data.webPrice +', '+data.originPrice);
+      res.json('price Error');
       return;
     }
 
@@ -245,6 +251,7 @@ router.route('/product').post(function(req,res){
     p.name = data.name;
     p.price = parseInt(data.price);
     p.webprice = parseInt(data.webPrice);
+    p.originprice = parseInt(data.originPrice);
 
     p._id = data.id == '0' ?new ObjectID(): ObjectID(data.id);
     if(data.id == '0' && req.files.length === 0){

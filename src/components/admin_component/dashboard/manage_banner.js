@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import React from 'react';
 import Loading from '../Loading';
+import Header from '../../../service/common/header.js';
 
 function RenderListBanner(props){
   if(props.banner.length===0){
@@ -91,6 +92,7 @@ export default class ManageBanner extends React.Component {
       $.ajax({
          url: '/api/updatebanner',
           type: "POST",
+          headers:Header(),
         //contentType: 'multipart/form-data; boundary="WebKitFormBoundaryUucA6DiAhQeYNgIm"',
         contentType:false,
          processData: false,

@@ -7,9 +7,11 @@ import AddProduct from './add_product';
 import ManageCategory from './manage_category';
 import ManageBanner from './manage_banner';
 import ListProdcuts from './list_product';
+import checkAuth from '../../../service/common/check-auth.js';
 
 export default class DashBoardPage extends React.Component {
 	constructor(props) {
+		checkAuth();
 		super(props);
 		this.state = {route:this.props.params.route};
 	}

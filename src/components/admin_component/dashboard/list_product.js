@@ -3,6 +3,7 @@ import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
 import React from 'react';
 import Loading from'../Loading';
+import Header from '../../../service/common/header.js';
 
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
@@ -53,6 +54,7 @@ export default class ListProdcuts extends React.Component {
        url: '/api/get-product/'+urlData,
        type: "GET",
        dataType: 'json',
+       headers:Header(),
        cache: false
        }).done(function(data) {
          self.setState({totalRecords: data.totalRecords, products:data.data});
@@ -69,6 +71,7 @@ export default class ListProdcuts extends React.Component {
         $.ajax({
        url: '/get/product/'+id,
        type: "GET",
+       headers:Header(),
        dataType: 'json',
        cache: false
      }).done(function(result) {
@@ -79,6 +82,10 @@ export default class ListProdcuts extends React.Component {
 
        });
       }
+    }
+
+    imageTemplate(rowData, column){
+      return(<img style={{'width':'100px', 'height':'100px'}} src={rowData.image}/>);
     }
 
     actionTemplate(rowData, column) {
@@ -99,6 +106,7 @@ export default class ListProdcuts extends React.Component {
         $.ajax({
        url: '/get/allsubcategory/',
        type: "GET",
+       headers:Header(),
        dataType: 'json',
        cache: false
        }).done(function(data) {
@@ -121,6 +129,7 @@ e.preventDefault();
       data.append('image',e.target.image.files[2]);
     data.append('name', e.target.name.value);
     data.append('category', e.target.category.value);
+    data.append('originPrice', e.target.originPrice.value);
     data.append('price', e.target.price.value);
     data.append('webPrice', e.target.webPrice.value);
     data.append('id', this.state.currentItem.id);
@@ -131,11 +140,16 @@ e.preventDefault();
   			//contentType: 'multipart/form-data; boundary="WebKitFormBoundaryUucA6DiAhQeYNgIm"',
         contentType:false,
          processData: false,
+         headers:Header(),
          //dataType:'json',
   			 data: data,
   			 cache: false,
   			 success: function(data) {
-  				alert('Thành công');
+  				if(data =='OK'){
+            alert('Thành công');
+          } else {
+            alert('Thất bại');
+          }
   			 }.bind(this),
   			 error: function(xhr, status, err) {
   				alert('thất bại');
@@ -152,13 +166,14 @@ e.preventDefault();
       const currentItem = this.state.currentItem;
         return (
         <div>
-          <input type="button" value="Add New" onClick={this.addNew}/>
+          <input type="button" value="Add New" data-toggle="modal" data-target="#crusdmodal" onClick={this.addNew}/>
           <input type="text" placeholder="Global Search" size="50" value={this.state.globalFilter} onChange={(e)=>{this.setState({globalFilter:e.target.value});console.log(this.state.globalFilter);}}/>
           <DataTable value={this.state.products} paginator={true} rows={10} totalRecords={this.state.totalRecords}
                 lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>} loading={true} loadingIcon={<Loading/>}>
               <Column field="id" header="Mã" />
-              <Column field="image" header="ảnh" />
+              <Column field="image" body={this.imageTemplate} header="ảnh" />
               <Column field="name" header="tên" sortable={true} />
+              <Column field="originPrice" header="giá gốc" sortable={true} />
               <Column field="price" header="giá thật" sortable={true} />
               <Column field="webPrice" header="giá bán" sortable={true} />
               <Column field="options" header="Tùy chọn" body={this.actionTemplate} style={{textAlign:'center', width: '6em'}} />
@@ -185,11 +200,15 @@ e.preventDefault();
                     <RenderSelectCategory data={this.state.select} values={currentItem.category} onChange={this.handleChange}/>
                   </div>
                   <div className="form-group">
-                <label>Gia</label>
+                <label>Giá gốc</label>
+                <input type="text"className="form-control" name="originPrice" value={currentItem.originPrice} onChange={this.handleChange} />
+              </div>
+                  <div className="form-group">
+                <label>Giá bán</label>
                 <input type="text"className="form-control" name="price" value={currentItem.price} onChange={this.handleChange} />
               </div>
               <div className="form-group">
-            <label>Gia ban</label>
+            <label>Giá sale</label>
             <input type="text"className="form-control" name="webPrice" value={currentItem.webPrice} onChange={this.handleChange} />
             </div>
                   <div className="form-group">

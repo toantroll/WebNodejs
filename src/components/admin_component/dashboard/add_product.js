@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import React from 'react';
 import CKEditor from "react-ckeditor-component";
+import Header from '../../../service/common/header.js';
 
 function RenderSelectCategory(props){
   var option = [];
@@ -43,6 +44,7 @@ export default class DashBoardPage extends React.Component {
       $.ajax({
      url: '/get/allsubcategory/',
      type: "GET",
+     headers:Header(),
      dataType: 'json',
      cache: false
      }).done(function(data) {
@@ -68,6 +70,7 @@ e.preventDefault();
   		$.ajax({
   			 url: '/api/product',
   				type: "POST",
+          headers:Header(),
   			//contentType: 'multipart/form-data; boundary="WebKitFormBoundaryUucA6DiAhQeYNgIm"',
         contentType:false,
          processData: false,
@@ -108,13 +111,6 @@ e.preventDefault();
   render(){
     return(
       <div>
-      <CKEditor
-              activeclassName="p10"
-              content={this.state.content}
-              events={{"blur": this.onBlur,"afterPaste": this.afterPaste,"change": this.onChange}}
-             />
-             <div>{this.state.content}</div>
-
       <form id="upload" action="/api/upload" enctype="multipart/form-data" method="post" onSubmit={this.submitUpload}>
       <div className="form-group">
     <label>ten</label>

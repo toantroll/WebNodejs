@@ -36,13 +36,16 @@ app.use('*', (req, res, next) =>{
 			next();
 		}else {
 			console.log(req.baseUrl+' escaped');
-			const cookies = new Cookies(req, res);
 		// check header or url parameters or post parameters for token
-			var token = cookies.get(config.cookieKey);
+			//var token = cookies.get(config.cookieKey);
+
+			var token = req.body.token || req.query.token || req.headers['x-access-token'];
+			console.log(token);
 			if (token) {
 				// verifies secret and checks exp
 			   jwt.verify(token, config.secret, function(err, decoded) {
 				  if (err) {
+						console.log(err);
 					return res.json({ success: false, message: 'Failed to authenticate token.' });
 					//res.redirect('/login');
 				  } else {

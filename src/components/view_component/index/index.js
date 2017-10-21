@@ -13,13 +13,18 @@ export default class Index extends React.Component {
     super(props);
   }
 
+  componentDidMount(){
+    document.title = "Trang chủ";
+  }
   render(){
+    //<IndexSchedule/>
+    //<IndexTrending/>
     return(
       <div>
         <IndexHeader/>
         <IndexBanner/>
-        <IndexSchedule/>
-        <IndexTrending/>
+
+
         <IndexNewArrival/>
         <ImportJs/>
       </div>

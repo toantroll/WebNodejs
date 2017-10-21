@@ -47,11 +47,11 @@ function CreateBanner(props){
      <div className="carousel-inner" role="listbox">
      {slideItemArray}
      </div>
-     <a className="left carousel-control" href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/index.html#myCarousel" role="button" data-slide="prev">
+     <a className="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
        <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
        <span className="sr-only">Previous</span>
      </a>
-     <a className="right carousel-control" href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/index.html#myCarousel" role="button" data-slide="next">
+     <a className="right carousel-control" href="#myCarousel" role="button" data-slide="next">
        <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
        <span className="sr-only">Next</span>
      </a>
@@ -82,32 +82,7 @@ componentDidMount(){
   render(){
     return(
 <div>
-<CreateBanner data={this.state.data}/>
- <div className="banner_bottom_agile_info">
-   <div className="container">
-         <div className="banner_bottom_agile_info_inner_w3ls">
-              <div className="col-md-6 wthree_banner_bottom_grid_three_left1 grid">
-         <figure className="effect-roxy">
-           <img src="./view/bottom1.jpg" alt=" " className="img-responsive"/>
-           <figcaption>
-             <h3><span>F</span>all Ahead</h3>
-             <p>New Arrivals</p>
-           </figcaption>
-         </figure>
-       </div>
-        <div className="col-md-6 wthree_banner_bottom_grid_three_left1 grid">
-         <figure className="effect-roxy">
-           <img src="./view/bottom2.jpg" alt=" " className="img-responsive"/>
-           <figcaption>
-             <h3><span>F</span>all Ahead</h3>
-             <p>New Arrivals</p>
-           </figcaption>
-         </figure>
-       </div>
-       <div className="clearfix"></div>
-     </div>
-  </div>
- </div>
+  <CreateBanner data={this.state.data}/>
 </div>
     );
   }

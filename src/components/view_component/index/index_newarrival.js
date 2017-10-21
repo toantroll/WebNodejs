@@ -3,6 +3,7 @@ import $ from 'jquery';
 import React from 'react';
 import Loading from'../Loading';
 import ReactDOM from 'react-dom';
+import convertNumber from '../convert-number';
 
 function RenderImg(props){
   return(<img src={props.url} alt="" className={'pro-image-'+props.position}/>);
@@ -88,8 +89,8 @@ function RenderProductItem(props){
 									<div className="item-info-product ">
 										<h4><a href={'san-pham/'+data._id}>{data.name}</a></h4>
 										<div className="info-product-price">
-											<span className="item_price">{data.price} VND</span>
-											<del>{data.webprice < data.price ? data.webprice+'VND':''} </del>
+											<span className="item_price">{convertNumber(data.webprice)} VND</span>
+											<del>{data.webprice < data.price ? convertNumber(data.price)+'VND':''} </del>
 										</div>
 										<div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
 															<form action="#" method="post">

@@ -21,3 +21,12 @@
   background-image: url('/img/banner/5.jpg') !important;
   background-repeat: no-repeat;
 }
+
+.pro-image-front{
+  width:255px;
+  height:280px;
+}
+.pro-image-back{
+  width:255px;
+  height:280px;
+}

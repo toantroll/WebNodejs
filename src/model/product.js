@@ -6,6 +6,7 @@ var product = {
   description:'',
   price:0,
   webprice:0,
+  originprice:0,
   hot:1,
   rating:5,
   viewtotal:1

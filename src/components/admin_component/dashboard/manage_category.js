@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import React from 'react';
 import Loading from '../Loading';
+import Header from '../../../service/common/header.js';
 
 function RenderCategory(props){
   var aArray = [];
@@ -107,6 +108,7 @@ export default class ManageCategory extends React.Component {
     $.ajax({
        url: '/api/updatecategory',
         type: "POST",
+        headers:Header(),
       //contentType: 'multipart/form-data; boundary="WebKitFormBoundaryUucA6DiAhQeYNgIm"',
       contentType:false,
        processData: false,

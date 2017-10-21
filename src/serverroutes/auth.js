@@ -23,11 +23,11 @@ router.route('/auth') // on routes for /This
 			if(user){
 				 // create a token
 				var token = jwt.sign(user, config.secret, {
-					expiresIn: 1440 // expires in 24 hours
+					expiresIn: 2880 // expires in 24 hours
 				});
 					res.cookie(config.cookieKey, token, { maxAge: 900000, httpOnly: true });
 					res.json({auth: true, message: 'success', token: token});
-          console.log(config.cookieKey);
+          //console.log(config.cookieKey);
 					//res.redirect('/dashboard');
 			} else {
 				res.json({auth: false, message:'account not exist'});

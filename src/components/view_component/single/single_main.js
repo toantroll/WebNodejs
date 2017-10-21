@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import Loading from'../Loading';
+import convertNumber from '../convert-number';
 
 function RenderLi(props){
     return(<li>{props.name}</li>);
@@ -20,7 +21,7 @@ function RenderProductItem(props){
   var data = props.data;
   let listImg = [];
   for(var i = 0; i < 2; i++){
-    listImg.push(<RenderImg url={data.img[i]} position={i===0?'front':'back'}/>);
+    listImg.push(<RenderImg url={data.img[0]} position={i===0?'front':'back'}/>);
   }
 
   return(
@@ -39,8 +40,8 @@ function RenderProductItem(props){
 									<div className="item-info-product ">
 										<h4><a href={'san-pham/'+data._id}>{data.name}</a></h4>
 										<div className="info-product-price">
-											<span className="item_price">{data.price} VND</span>
-											<del>{data.webprice < data.price ? data.webprice+'VND':''} </del>
+											<span className="item_price">{convertNumber(data.webprice)} VND</span>
+											<del>{data.webprice < data.price ? convertNumber(data.price)+'VND':''} </del>
 										</div>
 										<div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
 															<form action="#" method="post">
@@ -54,7 +55,7 @@ function RenderProductItem(props){
 																	<input type="hidden" name="currency_code" value="USD"/>
 																	<input type="hidden" name="return" value=" "/>
 																	<input type="hidden" name="cancel_return" value=" "/>
-																	<input type="submit" name="submit" value="Add to cart" className="button"/>
+																	<input type="button" name="submit" value="Add to cart" className="button"/>
 																</fieldset>
 															</form>
 														</div>
@@ -158,7 +159,7 @@ componentDidUpdate(){
     		</div>
     		<div className="col-md-8 single-right-left simpleCart_shelfItem">
     					<h3>{data.name}</h3>
-    					<p><span className="item_price">{data.webprice} VND</span> <del>{data.webprice < data.price ? data.webprice + ' VND': ''}</del></p>
+    					<p><span className="item_price">{data.webprice} VND</span> <del>{data.webprice < data.price ? data.price + ' VND': ''}</del></p>
     					<div className="rating1">
     						<span className="starRating">
     							<input id="rating5" type="radio" name="rating" value="5"/>
@@ -175,7 +176,7 @@ componentDidUpdate(){
     					</div>
     					<div className="occasion-cart">
     						<div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
-    															<form action="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/single.html#" method="post">
+    															<form action="#" method="post">
     																<fieldset>
     																	<input type="hidden" name="cmd" value="_cart"/>
     																	<input type="hidden" name="add" value="1"/>
@@ -186,7 +187,7 @@ componentDidUpdate(){
     																	<input type="hidden" name="currency_code" value="USD"/>
     																	<input type="hidden" name="return" value=" "/>
     																	<input type="hidden" name="cancel_return" value=" "/>
-    																	<input type="submit" name="submit" value="Add to cart" className="button"/>
+    																	<input type="button" name="submit" value="Add to cart" className="button"/>
     																</fieldset>
     															</form>
     														</div>
@@ -195,17 +196,17 @@ componentDidUpdate(){
     					<ul className="social-nav model-3d-0 footer-social w3_agile_social single_page_w3ls">
     						                                   <li className="share">Share On : </li>
     															<li>
-                                                                    <a href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/single.html#" className="facebook">
+                                                                    <a href="#" className="facebook">
     																  <div className="front"><i className="fa fa-facebook" aria-hidden="true"></i></div>
     																  <div className="back"><i className="fa fa-facebook" aria-hidden="true"></i></div>
                                                                     </a></li>
-    															<li><a href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/single.html#" className="twitter">
+    															<li><a href="#" className="twitter">
     																  <div className="front"><i className="fa fa-twitter" aria-hidden="true"></i></div>
     																  <div className="back"><i className="fa fa-twitter" aria-hidden="true"></i></div></a></li>
-    															<li><a href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/single.html#" className="instagram">
+    															<li><a href="#" className="instagram">
     																  <div className="front"><i className="fa fa-instagram" aria-hidden="true"></i></div>
     																  <div className="back"><i className="fa fa-instagram" aria-hidden="true"></i></div></a></li>
-    															<li><a href="https://p.w3layouts.com/demos_new/template_demo/20-06-2017/elite_shoppy-demo_Free/143933984/web/single.html#" className="pinterest">
+    															<li><a href="#" className="pinterest">
     																  <div className="front"><i className="fa fa-linkedin" aria-hidden="true"></i></div>
     																  <div className="back"><i className="fa fa-linkedin" aria-hidden="true"></i></div></a></li>
                                                                 <li>
@@ -219,14 +220,10 @@ componentDidUpdate(){
     	<div className="responsive_tabs_agileits">
     				<div id="horizontalTab" style={{display: 'block', width: '100%', margin: '0px'}}>
     						<ul className="resp-tabs-list">
-                                <RenderLi name="Description"/>
-                                <RenderLi name="Reviews"/>
+                                <RenderLi name="Bình luận"/>
 
     						</ul>
     					<div className="resp-tabs-container">
-
-    					   <RenderTab data={this.props.data.description}/>
-
     						<RenderTab data={comment}/>
 
     					</div>
