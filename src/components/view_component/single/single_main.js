@@ -106,7 +106,6 @@ export default class SingleBanner extends React.Component {
   }
 
 componentDidUpdate(){
-  console.log('updated');
   const slider = document.createElement("script");
       slider.src = "/client/js/slider.js";
       //script.async = true;
@@ -134,7 +133,6 @@ componentDidUpdate(){
              cache: false
              }).done(function(data) {
                sefl.setState({newArrival:data});
-               console.log(this.state);
              }).fail(function(err){
 
              });
@@ -143,8 +141,6 @@ componentDidUpdate(){
 
   render(){
     const data = this.props.data;
-    console.log($(location).attr('href'));
-      console.log(data);
     const comment = (<div className="fb-comments" data-href={$(location).attr('href')} data-numposts="5" data-width="100%"></div>);
     return(
       /*<-- banner-bootom-w3-agileits -->*/

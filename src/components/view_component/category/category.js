@@ -15,7 +15,6 @@ export default class Category extends React.Component {
   }
 
   componentDidMount(){
-    console.log('Did');
     var sefl = this;
     const id = this.state.cateId;
     if(id){
@@ -26,7 +25,7 @@ export default class Category extends React.Component {
      cache: false
      }).done(function(data) {
        sefl.setState({data:data});
-       console.log(this.state);
+       document.title = data.name;
      }).fail(function(err){
 
      });

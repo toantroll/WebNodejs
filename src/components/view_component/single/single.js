@@ -18,7 +18,6 @@ export default class Single extends React.Component {
   }
 
   componentDidMount(){
-    console.log('Did');
     var sefl = this;
     const id = this.state.productId;
     if(id){
@@ -28,8 +27,8 @@ export default class Single extends React.Component {
      dataType: 'json',
      cache: false
      }).done(function(data) {
+       document.title = data.product.name;
        sefl.setState({data:data});
-       console.log(this.state);
      }).fail(function(err){
 
      });

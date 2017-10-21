@@ -117,6 +117,7 @@ export default class ListProdcuts extends React.Component {
     }
 
     componentDidMount() {
+      document.title = 'Quản lý sản phẩm';
       this.getSubCategory();
     }
 

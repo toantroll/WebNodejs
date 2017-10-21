@@ -111,6 +111,7 @@ export default class ManageBanner extends React.Component {
 }
 
   componentDidMount(){
+    document.title = 'Quản lý banner';
     this.getAllBanner();
   }
 

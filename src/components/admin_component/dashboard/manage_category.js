@@ -100,6 +100,7 @@ export default class ManageCategory extends React.Component {
   }
 
   componentDidMount(){
+    document.title = 'Quản lý danh mục';
     this.getAllCategory();
   }
 

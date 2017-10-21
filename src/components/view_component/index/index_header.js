@@ -60,11 +60,17 @@ export default class IndexHeader extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {loginName:'', password:'', data:[]};
     this.submitCart = this.submitCart.bind(this);
+    this.submitSearch = this.submitSearch.bind(this);
   }
 
   submitCart(e){
     e.preventDefault();
   }
+
+  submitSearch(e){
+    e.preventDefault();
+  }
+
 
   componentDidMount(){
     var sefl = this;
@@ -104,7 +110,7 @@ export default class IndexHeader extends React.Component {
     <div className="header-bot">
     	<div className="header-bot_inner_wthreeinfo_header_mid">
     		<div className="col-md-4 header-middle">
-    			<form action="#" method="post">
+    			<form action="#" method="post" onSubmit={this.submitSearch}>
     					<input type="search" name="search" placeholder="Search here..." required=""/>
     					<input type="submit" value=" "/>
     				<div className="clearfix"></div>

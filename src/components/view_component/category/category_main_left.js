@@ -13,13 +13,9 @@ import Loading from'../Loading';
         if(parent.sub_cate.length === 0){
           parentArray = <li><a href={'/danh-muc'+parent.url+"/"+parent._id}>{parent.name}</a></li>;
         } else {
-          console.log(parent.sub_cate);
-          console.log("data parentSSSS");
 
           parentArray = <li><input type="checkbox" id={'item-'+i}/><label for={'item-'+i}><i className="fa fa-long-arrow-right" aria-hidden="true"></i>{parent.name}</label><RenderChildMenu data={parent.sub_cate}/></li>;
       }
-      console.log(parentArray);
-      console.log("parentArray");
       return(
         {parentArray}
       );
@@ -49,8 +45,6 @@ import Loading from'../Loading';
     for(var i = 0; i < data.length; i++){
       var parentArray = {};
         const parent = props.data[i];
-        console.log(parent);
-        console.log("data parentSSSS");
           if(parent.sub_cate.length === 0){
             parentArray = <li><a href={'/danh-muc'+parent.url+"/"+parent._id}>{parent.name}</a></li>;
           } else {
@@ -75,7 +69,6 @@ export default class ClassName extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log("Call slider");
     const slider = document.createElement("script");
         slider.src = "/client/js/slider_bar.js";
         //script.async = true;
@@ -91,7 +84,6 @@ export default class ClassName extends React.Component {
        cache: false
        }).done(function(data) {
          sefl.setState({data:data});
-         console.log(this.state);
        }).fail(function(err){
 
        });

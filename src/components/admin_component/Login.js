@@ -14,6 +14,10 @@ export default class LoginPage extends React.Component {
 									password: ''};
 	}
 
+	componentDidMount(){
+		document.title = 'Đăng nhập';
+	}
+
 	handleChange(e){
 		const fieldName = e.target.name;
 		const data = {};
