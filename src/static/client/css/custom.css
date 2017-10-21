@@ -1,0 +1,23 @@
+.item1{
+  background-image: url('/img/banner/1.jpg') !important;
+  background-repeat: no-repeat;
+}
+.item2{
+  background-image: url('/img/banner/2.jpg') !important;
+  background-repeat: no-repeat;
+}
+
+.item3{
+  background-image: url('/img/banner/3.jpg') !important;
+  background-repeat: no-repeat;
+}
+
+.item4{
+  background-image: url('/img/banner/4.jpg') !important;
+  background-repeat: no-repeat;
+}
+
+.item5{
+  background-image: url('/img/banner/5.jpg') !important;
+  background-repeat: no-repeat;
+}
