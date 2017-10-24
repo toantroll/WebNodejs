@@ -20,7 +20,7 @@ function RenderProductItem(props){
 										{listImg}
 											<div className="men-cart-pro">
 												<div className="inner-men-cart-pro">
-													<a href={'/san-pham/'+data._id} className="link-product-add-cart">Quick View</a>
+													<a href={'/san-pham/'+data._id} className="link-product-add-cart">Xem</a>
 												</div>
 											</div>
 											<span className="product-new-top">New</span>
@@ -33,20 +33,7 @@ function RenderProductItem(props){
 											<del>{data.webprice < data.price ? convertNumber(data.price)+'VND':''} </del>
 										</div>
 										<div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
-															<form action="#" method="post">
-																<fieldset>
-																	<input type="hidden" name="cmd" value="_cart"/>
-																	<input type="hidden" name="add" value="1"/>
-																	<input type="hidden" name="business" value=" "/>
-																	<input type="hidden" name="item_name" value={data._id}/>
-																	<input type="hidden" name="amount" value="30.99"/>
-																	<input type="hidden" name="discount_amount" value="1.00"/>
-																	<input type="hidden" name="currency_code" value="USD"/>
-																	<input type="hidden" name="return" value=" "/>
-																	<input type="hidden" name="cancel_return" value=" "/>
-																	<input type="button" name="submit" value="Add to cart" className="button"/>
-																</fieldset>
-															</form>
+													<input type="button" onClick={(e) => {window.location.href = '/san-pham/'+data._id}} value="Xem" className="button"/>
 														</div>
 									</div>
 								</div>
@@ -73,6 +60,7 @@ export default class CategoryMainRight extends React.Component{
    };
   }
   handlePageChange(pageNumber) {
+    this.setState({total:-1});
      this.getProduct(pageNumber);
  }
 
@@ -90,7 +78,6 @@ export default class CategoryMainRight extends React.Component{
   cache: false
   }).done(function(data) {
     self.setState({activePage:page,data:data.data,total:data.total});
-    console.log(self.state);
   }).fail(function(err){
 
   });

@@ -1,4 +1,5 @@
 const escapeUrl = [
-'/api/'
+'/api/',
+'/admin/'
 ]
 export default escapeUrl;

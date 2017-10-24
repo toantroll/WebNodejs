@@ -17,7 +17,6 @@ export default class DashBoardPage extends React.Component {
 	}
 
 	getUser(props){
-	console.log('asdadasdasd');
 	const data = user.getByName(props.userName);
 	return(
 		<div>
@@ -26,7 +25,6 @@ export default class DashBoardPage extends React.Component {
 	);
 	}
 	getUser12(props){
-	console.log('asdadasdasd');
 	return(
 		<div>
 			<h1>Runnning......</h1>

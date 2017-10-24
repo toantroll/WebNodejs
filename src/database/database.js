@@ -43,14 +43,21 @@ if (err) throw err;
   //   db.close();
   // });
 
-  db.collection("category").updateOne({_id: ObjectID('59e4f5c54ce1bc2d18f32e7e') },
-     { '$set': { _id: ObjectID('59e4f5c54ce1bc2d18f32e7e'),
-  name: 'asdw',
-  sort: 999,
-  url: '/asdw' }}
-     , function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    db.close();
-  });
+  // db.collection("category").updateOne({_id: ObjectID('59e4f5c54ce1bc2d18f32e7e') },
+  //    { '$set': { _id: ObjectID('59e4f5c54ce1bc2d18f32e7e'),
+  // name: 'asdw',
+  // sort: 999,
+  // url: '/asdw' }}
+  //    , function(err, result) {
+  //   if (err) throw err;
+  //   console.log(result);
+  //   db.close();
+  // });
+
+  var query = {user_name:'admin', password: 'admin'};
+  db.collection("user").find(query).toArray(function(err, result) {
+  if (err) throw err;
+  console.log(result);
+  db.close();
+});
 });

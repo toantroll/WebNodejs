@@ -35,7 +35,6 @@ export default class Category extends React.Component {
   render(){
     const data = this.state.data;
     const id = this.state.cateId;
-    console.log(data);
     if(!data){
       return(<Loading/>);
     } else {

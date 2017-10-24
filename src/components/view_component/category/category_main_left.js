@@ -97,7 +97,7 @@ export default class ClassName extends React.Component {
       return(
         <div className="col-md-4 products-left">
 			<div className="filter-price">
-				<h3>Filter By <span>Price</span></h3>
+				<h3>Lọc theo giá</h3>
 					<ul className="dropdown-menu6">
 						<li>
 							<div id="slider-range" className="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">

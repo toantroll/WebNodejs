@@ -95,8 +95,6 @@ router.route('/updatecategory').post(function(req,res){
     //get data
     const data = req.body;
     const img = req.file;
-    console.log(data);
-    console.log(img);
     const common = new Common();
     //validate
     if(common.isEmpty(data.parent)){

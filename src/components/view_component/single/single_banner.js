@@ -10,7 +10,6 @@ export default class SingleBanner extends React.Component {
 
   render(){
     const bgimg = 'url(/img/category/'+this.state.cateId+'.png) no-repeat center';
-    console.log(bgimg);
     return(
       <div className="page-head_agile_info_w3l" style={{background:bgimg }}>
     		<div className="container">

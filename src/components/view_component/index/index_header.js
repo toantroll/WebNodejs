@@ -58,16 +58,21 @@ export default class IndexHeader extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {loginName:'', password:'', data:[]};
+    this.state = {loginName:'', password:'', data:[], currentItem:{}};
     this.submitCart = this.submitCart.bind(this);
     this.submitSearch = this.submitSearch.bind(this);
+  }
+
+
+  submitSearch(e){
+    e.preventDefault();
   }
 
   submitCart(e){
     e.preventDefault();
   }
 
-  submitSearch(e){
+  submitCheckOut(e){
     e.preventDefault();
   }
 
@@ -95,6 +100,7 @@ export default class IndexHeader extends React.Component {
 
   render(){
     const loginName = this.state.loginName;
+    const currentItem = this.state.currentItem;
     return(
       <div>
     <div className="header" id="home">
@@ -220,6 +226,7 @@ export default class IndexHeader extends React.Component {
     				</div>
     			</div>
     		</div>
+        
     		<div className="modal fade" id="myModal2" tabindex="-1" role="dialog">
     			<div className="modal-dialog">
     				<div className="modal-content">

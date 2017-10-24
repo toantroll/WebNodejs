@@ -9,12 +9,48 @@ import TrendingDocument from'../documentacess/trending_document';
 import ProductDocument from'../documentacess/product_document';
 import MainMenuDocument from '../documentacess/main_menu_document';
 import CategoryDocument from '../documentacess/cate_document';
+import CheckoutDocument from '../documentacess/checkout_document';
+import Common from '../util/common.js';
 var ObjectID = require('mongodb').ObjectID;
+import checkout from '../model/checkout';
 
 router.use(function(req, res, next) { // run for any & all requests
     console.log("Connection to the GET"); // set up logging for every API call
     next(); // ..to the next routes from here..
 });
+
+//checkout
+router.route('/checkout')
+.post(function(req,res){
+  const common = new Common();
+  const data = req.body;
+
+  //validate
+  if(common.isEmpty(data.id) || !ObjectID.isValid(data.id)){
+    res.json('Id Error');
+    return;
+  }
+  if(common.isEmpty(data.cusSize) || common.isEmpty(data.cusName) || common.isEmpty(data.cusTel) || common.isEmpty(data.cusAdd)
+      || !common.isNumber(data.cusSize) || !common.isNumber(data.cusTel)){
+        res.json('Info Error');
+        return;
+  }
+
+  //fill data into model
+  var c = checkout;
+  c._id = new ObjectID();
+  c.pid = ObjectID(data.id);
+  c.cus_size = data.cusSize;
+  c.cus_name = data.cusName;
+  c.cus_tel = data.cusTel;
+  c.cus_add = data.cusAdd;
+
+  const checkoutDocument = new CheckoutDocument();
+  checkoutDocument.insertOne(c).then(function(result){
+    res.json('OK');
+  }).catch(function(err){res.json('Sys Error'); return;})
+});
+
 
 router.route('/banner').get(function(req, res){
   const bannerAccess =  new BannerDocument();

@@ -13,7 +13,6 @@ import Loading from'../Loading';
 export default class Single extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.params.id);
     this.state = {productId:props.params.id, data: undefined};
   }
 
@@ -37,9 +36,6 @@ export default class Single extends React.Component {
 
   render(){
     const data = this.state.data;
-
-    console.log('data');
-    console.log(data);
     if(!data){
       return(<Loading/>);
     } else {

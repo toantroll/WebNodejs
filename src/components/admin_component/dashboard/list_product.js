@@ -9,8 +9,6 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 
 function RenderSelectCategory(props){
-  console.log(props.values);
-  console.log('props.values');
   var option = [];
   option.push(<option value="0">SELECT</option>);
   const data = props.data;
@@ -77,7 +75,6 @@ export default class ListProdcuts extends React.Component {
      }).done(function(result) {
          const data = result.product;
          sefl.setState({currentItem:{id:data._id, name:data.name, price:data.price, webPrice:data.webprice, category:data.cate_id}});
-         console.log(sefl.state);
        }).fail(function(err){
 
        });
@@ -168,7 +165,7 @@ e.preventDefault();
         return (
         <div>
           <input type="button" value="Add New" data-toggle="modal" data-target="#crusdmodal" onClick={this.addNew}/>
-          <input type="text" placeholder="Global Search" size="50" value={this.state.globalFilter} onChange={(e)=>{this.setState({globalFilter:e.target.value});console.log(this.state.globalFilter);}}/>
+          <input type="text" placeholder="Global Search" size="50" value={this.state.globalFilter} onChange={(e)=>{this.setState({globalFilter:e.target.value});}}/>
           <DataTable value={this.state.products} paginator={true} rows={10} totalRecords={this.state.totalRecords}
                 lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>} loading={true} loadingIcon={<Loading/>}>
               <Column field="id" header="Mã" />

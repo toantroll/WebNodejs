@@ -35,18 +35,27 @@ app.use('*', (req, res, next) =>{
 		if(!flag){
 			next();
 		}else {
-			console.log(req.baseUrl+' escaped');
+			if(req.baseUrl.includes('/admin/login')){
+				next();
+				return;
+			}
+			const isRedirect = req.baseUrl.includes('/admin/');
 		// check header or url parameters or post parameters for token
-			//var token = cookies.get(config.cookieKey);
-
-			var token = req.body.token || req.query.token || req.headers['x-access-token'];
+			const cookies = new Cookies(req, res);
+			var token = cookies.get(config.cookieKey);
+			//var token = req.body.token || req.query.token || req.headers['x-access-token'];
 			console.log(token);
 			if (token) {
 				// verifies secret and checks exp
 			   jwt.verify(token, config.secret, function(err, decoded) {
 				  if (err) {
 						console.log(err);
-					return res.json({ success: false, message: 'Failed to authenticate token.' });
+						if(isRedirect){
+							res.redirect('/admin/login');
+						} else {
+							res.json({ success: false, message: 'Failed to authenticate token.' });
+						}
+					return;
 					//res.redirect('/login');
 				  } else {
 					// if everything is good, save to request for use in other routes
@@ -68,8 +77,13 @@ app.use('*', (req, res, next) =>{
 				});
 
 			} else {
-				return res.json({ success: false, message: 'Failed to authenticate token.' });
+				if(isRedirect){
+					res.redirect('/admin/login');
+				} else {
+				res.json({ success: false, message: 'Failed to authenticate token.' });
 				//res.redirect('/login');
+			}
+			return ;
 			}
 		}
 	});

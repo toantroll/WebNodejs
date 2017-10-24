@@ -11,7 +11,8 @@ export default class LoginPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.login = this.login.bind(this);
 		this.state = {loginName: '',
-									password: ''};
+									password: '',
+								message:''};
 	}
 
 	componentDidMount(){
@@ -23,25 +24,26 @@ export default class LoginPage extends React.Component {
 		const data = {};
 		data[fieldName]= e.target.value
 		this.setState(data);
-		console.log('Run'+ e.target.value);
-		console.log(fieldName);
-		console.log(this.state);
 	}
 
 	login(e){
 		e.preventDefault();
+		var data = {loginName: e.target.loginName.value,
+									password: e.target.password.value};
 		$.ajax({
 			 url: '/auth',
 				type: "POST",
 			 dataType: 'json',
-			 data: this.state,
+			 data: data,
 			 cache: false,
 			 success: function(data) {
 				  if(data.auth){
 				 	 localStorage.set('shoptoken', data.token);
 				 	 window.location = '/admin/dashboard/manage-category';
+				 } else {
+					 this.setState({message:data.message});
+					 $(".error-msg").css('display','block');
 				 }
-				console.log(data);
 			 }.bind(this),
 			 error: function(xhr, status, err) {
 				 console.error('this.props.url', status, err.toString());
@@ -60,13 +62,14 @@ export default class LoginPage extends React.Component {
 	</a>
 </div>
 <div className="content">
-	<form className="login-form" action="/auth" method="post" onSubmit={this.login}>
+	<form  action="/auth" method="post" onSubmit={this.login}>
 		<h3 className="form-title">Sign In</h3>
-		<div className="alert alert-danger display-hide">
+		<div className="alert alert-danger error-msg" style={{'display':'none'}}>
 			<button className="close" data-close="alert"></button>
 			<span>
-			Enter any username and password. </span>
+			{this.state.message}</span>
 		</div>
+
 		<div className="form-group">
 			<label className="control-label visible-ie8 visible-ie9">Username</label>
 			<input className="form-control form-control-solid placeholder-no-fix" type="text" value={loginName} autocomplete="off" placeholder="Username" name="loginName"  onChange={this.handleChange}/>
