@@ -194,7 +194,6 @@ e.preventDefault();
   		$.ajax({
   			 url: '/api/product',
   				type: "POST",
-  			//contentType: 'multipart/form-data; boundary="WebKitFormBoundaryUucA6DiAhQeYNgIm"',
         contentType:false,
          processData: false,
          headers:Header(),
@@ -227,7 +226,7 @@ e.preventDefault();
           <input type="button" value="Add New" data-toggle="modal" data-target="#crusdmodal" onClick={this.addNew}/>
           <input type="text" placeholder="Global Search" size="50" value={this.state.globalFilter} onChange={(e)=>{this.setState({globalFilter:e.target.value});}}/>
           <DataTable value={this.state.products} paginator={true} rows={10} totalRecords={this.state.totalRecords}
-                lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>} loading={true}>
+                lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>}>
               <Column field="id" header="Mã" />
               <Column field="image" body={this.imageTemplate} header="ảnh" />
               <Column field="name" header="tên" sortable={true} />
