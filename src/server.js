@@ -49,7 +49,6 @@ app.use('*', (req, res, next) =>{
 				// verifies secret and checks exp
 			   jwt.verify(token, config.secret, function(err, decoded) {
 				  if (err) {
-						console.log(err);
 						if(isRedirect){
 							res.redirect('/admin/login');
 						} else {
@@ -62,17 +61,6 @@ app.use('*', (req, res, next) =>{
 					req.decoded = decoded;
 					var name = decoded.name;
 					next();
-					//auth
-					// var userAuth = user.find(function(user){
-					// 	return user.name === name;
-					// });
-					// //check user
-					// if(userAuth){
-					// 	next();
-					// } else {
-					// 	//res.redirect('/login');
-					// 	return res.json({ success: false, message: 'Failed to authenticate token.' });
-					// }
 				  }
 				});
 
@@ -81,7 +69,6 @@ app.use('*', (req, res, next) =>{
 					res.redirect('/admin/login');
 				} else {
 				res.json({ success: false, message: 'Failed to authenticate token.' });
-				//res.redirect('/login');
 			}
 			return ;
 			}

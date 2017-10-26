@@ -9,29 +9,63 @@ import productView from '../model/product-view';
 import ProductDocument from'../documentacess/product_document';
 import CategoryDocument from'../documentacess/cate_document';
 import BannerDocument from'../documentacess/banner_document';
+import CheckoutDocument from '../documentacess/checkout_document';
+import ScheduleDocument from '../documentacess/schedule_document';
 import config from '../config';
 import Common from '../util/common.js';
 var ObjectID = require('mongodb').ObjectID;
 
 var multer = require('multer'); // v1.0.5
 
-// var Flickr = require("flickrapi");
-// var flickrOptions = {
-//       api_key: config.api_key,
-//       secret: config.secret,
-//       user_id: config.flickr_user_id,
-//       access_token: config.flickr_access_token,
-//       access_token_secret: config.flickr_access_token_secret
-//     };
-//     var photo = require('flickr-photo-info')({
-//     key: config.api_key
-//   })
-//
-//     const stream = require("stream");
-//     var streamBuffers = require('stream-buffers');
 router.use(function(req, res, next) { // run for any & all requests
     console.log("Connection to the API"); // set up logging for every API call
     next(); // ..to the next routes from here..
+});
+
+router.route('/schedule')
+.post(function(req, res){
+  const common = new Common();
+  const data = req.body;
+  if(!ObjectID.isValid(data.pid)){
+    res.json('Id Error');
+    return;
+  }
+  var schedule = {pid:ObjectID(data.pid),
+    description:common.isEmpty(data.description)?'':data.description};
+  const scheduleDocument = new ScheduleDocument();
+  scheduleDocument.updateOne(schedule).then(function(result){
+    res.json('OK');
+  }).catch(function(e){console.log(e);res.json('Sys Error'); return;});
+});
+
+router.route('/acceptcheckout')
+.post(function(req,res){
+  const common = new Common();
+  const data = req.body;
+  if(!ObjectID.isValid(data.id)){
+    res.json('Id Error');
+    return;
+  }
+
+  const checkoutDocument = new CheckoutDocument();
+  checkoutDocument.acceptOne(ObjectID(data.id)).then(function(result){
+    res.json('OK');
+  }).catch(function(e){console.log(e);res.json('Sys Error'); return;});
+});
+
+router.route('/deletecheckout')
+.post(function(req,res){
+  const common = new Common();
+  const data = req.body;
+  if(!ObjectID.isValid(data.id)){
+    res.json('Id Error');
+    return;
+  }
+
+  const checkoutDocument = new CheckoutDocument();
+  checkoutDocument.delete(ObjectID(data.id)).then(function(result){
+    res.json('OK');
+  }).catch(function(e){console.log(e);res.json('Sys Error'); return;});
 });
 
 router.route('/get-product/:first/:rows/:sortBy/:sortType')
@@ -57,11 +91,10 @@ router.route('/get-product/:first/:rows/:sortBy/:sortType')
   }
   const productDocument = new ProductDocument();
   //get total records
-  productDocument.getCount().then(function(result){
+  productDocument.getCount(query).then(function(result){
     if(result > 0){
       resData.totalRecords = result;
       productDocument.getManyAndLimitWithSort(query, lazy.rows*1, 1*lazy.first, sort).then(function(result){
-        console.log(sort);
         var pAray =[];
         for(var i = 0; i < result.length; i++){
           // var p = productView;
@@ -126,7 +159,6 @@ router.route('/updatecategory').post(function(req,res){
     const imageFolder = '/img/category/';
     const fileType = '.png';
 
-    console.log(c);
 
     //create category
     const categoryDocument = new CategoryDocument();
@@ -319,45 +351,6 @@ router.route('/product').post(function(req,res){
           res.json('OK');
         }).catch(function(e){console.log(e);res.json('Update Error');return;});
   }
-
-  // console.log(flickrOptions);
-  // //auth
-  // Flickr.authenticate(flickrOptions, function(error, flickr) {
-  // var uploadOptions = {};
-  // var photos = [];
-  //
-  // for(var i = 0; i <req.files.length; i++){
-  //   //create stream for each image
-  //   let readStream = new stream.PassThrough();
-  //   readStream.write(req.files[i].buffer);
-  //   readStream.end();
-  //   readStream.path='./upload/image.png';
-  //   photos.push({
-  //     title: "Shoes",
-  //     tags: [
-  //       "shoes"
-  //     ],
-  //     photo:  readStream
-  //   });
-  // }
-  // uploadOptions = {photos:photos};
-  // //upload all file
-  // Flickr.upload(uploadOptions, flickrOptions, function(err, result) {
-  //   if(err) {
-  //     return console.error(error);
-  //   }
-  //   //get ember url
-  //   getUrls(result).then(function(data){
-  //     p.img = data;
-  //     console.log(p);
-  //     const productDocument = new ProductDocument();
-  //     //insert product
-  //     productDocument.insertOne(p).then(function(data){
-  //       res.json(data);
-  //     }).catch(function(e){res.json(e)});
-  //   });
-  //
-  // });
 });
 });
 

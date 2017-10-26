@@ -54,10 +54,27 @@ if (err) throw err;
   //   db.close();
   // });
 
-  var query = {user_name:'admin', password: 'admin'};
-  db.collection("user").find(query).toArray(function(err, result) {
-  if (err) throw err;
-  console.log(result);
-  db.close();
-});
+//   var query = {user_name:'admin', password: 'admin'};
+//   db.collection("user").find(query).toArray(function(err, result) {
+//   if (err) throw err;
+//   console.log(result);
+//   db.close();
+// });
+
+db.collection("checkout").aggregate([
+   {$match : { '_id' :  ObjectID('59ef795111a3ef029c488f76')}},
+    {
+      $lookup:
+       {
+         from: 'products',
+         localField: 'pid',
+         foreignField: '_id',
+         as: 'product'
+       }
+     }
+    ], function(err, res) {
+    if (err) throw err;
+    console.log(res[0]);
+    db.close();
+  });
 });

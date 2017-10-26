@@ -23,10 +23,10 @@
 }
 
 .pro-image-front{
-  width:255px;
-  height:280px;
+  max-width:255px;
+  max-height:280px;
 }
 .pro-image-back{
-  width:255px;
-  height:280px;
+  max-width:255px;
+  max-height:280px;
 }

@@ -41,6 +41,7 @@ export default class CateDocument {
               data.push(result[i].sub_cate[j]);
           }
       }
+      console.log(data);
       data.sort(function(a,b){return a.sort - b.sort});
       if(number > 0){
       resolve(data.slice(0, 4));

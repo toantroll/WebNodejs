@@ -123,7 +123,7 @@ export default class IndexHeader extends React.Component {
     			</form>
     		</div>
     			<div className="col-md-4 logo_agile">
-    				<h1><a href="#"><span>E</span>lite Shoppy <i className="fa fa-shopping-bag top_logo_agile_bag" aria-hidden="true"></i></a></h1>
+    				<h1><a href="/"><span>Z</span>elus Store <i className="fa fa-shopping-bag top_logo_agile_bag" aria-hidden="true"></i></a></h1>
     			</div>
     		<div className="col-md-4 agileits-social top_content">
     						<ul className="social-nav model-3d-0 footer-social w3_agile_social">
@@ -226,7 +226,7 @@ export default class IndexHeader extends React.Component {
     				</div>
     			</div>
     		</div>
-        
+
     		<div className="modal fade" id="myModal2" tabindex="-1" role="dialog">
     			<div className="modal-dialog">
     				<div className="modal-content">

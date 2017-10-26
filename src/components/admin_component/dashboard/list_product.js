@@ -32,7 +32,9 @@ export default class ListProdcuts extends React.Component {
                       products:[],
                       totalRecords:0,
                       globalFilter:'',
-                      currentItem:{id:'', name:'', price:'', webPrice:'', category:''}};
+                      currentItem:{id:'', name:'', price:'', webPrice:'', category:''},
+                      scheduleItem:{description:'', pid:''},
+                      lazyData:{first:0, rows:10, sortField: null, sortOrder: 1}};
         this.onLazyLoad = this.onLazyLoad.bind(this);
         this.submitUpload = this.submitUpload.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -40,14 +42,23 @@ export default class ListProdcuts extends React.Component {
         this.onClickHandle = this.onClickHandle.bind(this);
         this.actionTemplate = this.actionTemplate.bind(this);
         this.addNew = this.addNew.bind(this);
+        this.createUrlData = this.createUrlData.bind(this);
+        this.getListCheckOut = this.getListCheckOut.bind(this);
+        this.onClickHandleSchedule = this.onClickHandleSchedule.bind(this);
+        this.handleChangeSchedule = this.handleChangeSchedule.bind(this);
+        this.submitAccessSchedule = this.submitAccessSchedule.bind(this);
     }
 
-    onLazyLoad(event){
-      var self = this;
-      self.setState({products:[]});
-      const urlData = (event.first === null ? 0 : event.first)+'/'+ (event.rows) +'/'+
+    createUrlData(){
+      const event = this.state.lazyData;
+      return (event.first === null ? 0 : event.first)+'/'+ (event.rows) +'/'+
                       (event.sortField)+'/'+
                       (event.sortOrder === null ? 1 : event.sortOrder);
+    }
+
+    getListCheckOut(){
+      var self = this;
+      const urlData = this.createUrlData();
         $.ajax({
        url: '/api/get-product/'+urlData,
        type: "GET",
@@ -55,11 +66,19 @@ export default class ListProdcuts extends React.Component {
        headers:Header(),
        cache: false
        }).done(function(data) {
-         self.setState({totalRecords: data.totalRecords, products:data.data});
+         self.setState({totalRecords: data.totalRecords > 0? data.totalRecords: -1, products:data.data});
        }).fail(function(err){
          self.setState({totalRecords: -1, products:[]});
        });
     }
+
+    onLazyLoad(event){
+      this.setState({products:[]});
+      this.setState({lazyData:{first:event.first, rows:event.rows, sortField:event.sortField, sortOrder:event.sortOrder}});
+      this.getListCheckOut();
+    }
+
+
 
     onClickHandle(e){
       var sefl = this;
@@ -85,9 +104,19 @@ export default class ListProdcuts extends React.Component {
       return(<img style={{'width':'100px', 'height':'100px'}} src={rowData.image}/>);
     }
 
+    onClickHandleSchedule(e){
+      const id = e.target.getAttribute('data-id');
+      this.setState({scheduleItem:{description:'', pid:id}});
+    }
+
     actionTemplate(rowData, column) {
            return <div>
-               <a href="#" data-toggle="modal" data-target="#crusdmodal"><i data-id={rowData.id} onClick={this.onClickHandle} className="fa fa-edit"></i></a>
+                <a href="#" data-toggle="modal" data-target="#schedmodal">
+                    <i data-id={rowData.id} onClick={this.onClickHandleSchedule} className="fa fa-edit"></i>
+                </a>
+               <a href="#" data-toggle="modal" data-target="#crusdmodal">
+                <i data-id={rowData.id} onClick={this.onClickHandle} className="fa fa-edit"></i>
+              </a>
            </div>;
        }
 
@@ -96,6 +125,13 @@ export default class ListProdcuts extends React.Component {
       const data = this.state.currentItem;
       data[fieldName]= e.target.value
       this.setState({currentItem:data});
+    }
+
+    handleChangeSchedule(e){
+      const fieldName = e.target.name;
+      const data = this.state.scheduleItem;
+      data[fieldName]= e.target.value
+      this.setState({scheduleItem:data});
     }
 
     getSubCategory(){
@@ -116,6 +152,29 @@ export default class ListProdcuts extends React.Component {
     componentDidMount() {
       document.title = 'Quản lý sản phẩm';
       this.getSubCategory();
+    }
+
+    submitAccessSchedule(e){
+      e.preventDefault();
+      var data = {pid:e.target.pid.value, description:e.target.description.value};
+      $.ajax({
+  			 url: '/api/schedule',
+  				type: "POST",
+         headers:Header(),
+         dataType:'json',
+  			 data: data,
+  			 cache: false,
+  			 success: function(data) {
+  				if(data =='OK'){
+            alert('Thành công');
+          } else {
+            alert('Thất bại');
+          }
+  			 }.bind(this),
+  			 error: function(xhr, status, err) {
+  				alert('thất bại');
+  			 }.bind(this)
+  		 });
     }
 
     submitUpload(e){
@@ -162,12 +221,13 @@ e.preventDefault();
 
     render() {
       const currentItem = this.state.currentItem;
+      const scheduleItem = this.state.scheduleItem;
         return (
         <div>
           <input type="button" value="Add New" data-toggle="modal" data-target="#crusdmodal" onClick={this.addNew}/>
           <input type="text" placeholder="Global Search" size="50" value={this.state.globalFilter} onChange={(e)=>{this.setState({globalFilter:e.target.value});}}/>
           <DataTable value={this.state.products} paginator={true} rows={10} totalRecords={this.state.totalRecords}
-                lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>} loading={true} loadingIcon={<Loading/>}>
+                lazy={true} onLazyLoad={this.onLazyLoad} globalFilter={this.state.globalFilter} emptyMessage={this.state.totalRecords == -1? 'No record':<Loading/>} loading={true}>
               <Column field="id" header="Mã" />
               <Column field="image" body={this.imageTemplate} header="ảnh" />
               <Column field="name" header="tên" sortable={true} />
@@ -213,6 +273,31 @@ e.preventDefault();
                 <label>anh</label>
                     <input type="file" multiple  name="image"/>
                     </div>
+                    <input type="submit" value="Gui" />
+                  </form>
+                }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="schedmodal" className="modal fade" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                  <h4 className="modal-title">Schedule</h4>
+                </div>
+                <div className="modal-body">
+                {
+                  <form id="upload" action="#" enctype="multipart/form-data" method="post" onSubmit={this.submitAccessSchedule}>
+                  <div className="form-group">
+                  <input type="hidden" name="pid" value={scheduleItem.pid}/>
+                  <label>Mô tả</label>
+                    <textarea className="form-control" name="description" hange={this.handleChangeSchedule}>
+                      {scheduleItem.description}
+                    </textarea>
+                  </div>
                     <input type="submit" value="Gui" />
                   </form>
                 }

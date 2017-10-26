@@ -41,11 +41,10 @@ export default class ProductDocument {
   return promise;
   }
 
-  getCount(cateId){
+  getCount(query){
     const baseDocument = new BaseDocument();
     const common = new Common();
     const collection = 'products';
-    var query = common.isEmpty(cateId)?{}:{cate_id:baseDocument.convertToObjectId(cateId)};
     var promise = new Promise(function(resolve, reject){
       baseDocument.getCount(collection, query).then(function(result){
       resolve(result);
@@ -136,10 +135,12 @@ export default class ProductDocument {
   }
 
   getNewArrial(count){
+    console.log(count);
     const cateDocument = new CateDocument();
     const productDocument = new ProductDocument();
       var promise = new Promise(function(resolve, reject){
          cateDocument.getSubCategory(4).then(function(result){
+           console.log(result);
             var data=[];
             var isEnd= false;
               for(var i = 0; i < result.length; i++){

@@ -3,6 +3,58 @@ import config from '../config';
 var ObjectID = require('mongodb').ObjectID;
 export default class bannerDocument {
 
+  getAggregateOne(collection, joinCollecion, query, localField, foreignField, alias){
+    var promise = new Promise(function(resolve, reject){
+        dbs.connect(config.connectionString, function(err, db){
+          db.collection(collection).aggregate([
+             {$match : query},
+              {
+                $lookup:
+                 {
+                   from: joinCollecion,
+                   localField: localField,
+                   foreignField: foreignField,
+                   as: alias
+                 }
+               }
+              ], function(err, res) {
+              if (err) throw err;
+              resolve(res[0]);
+              db.close();
+            });
+        });
+    });
+    return promise;
+  }
+
+  getAggregateLimitAndSkipWithSort(collection, joinCollecion, query, localField,
+     foreignField, alias, limit, skip, sort){
+    var promise = new Promise(function(resolve, reject){
+        dbs.connect(config.connectionString, function(err, db){
+          db.collection(collection).aggregate([
+             {'$match' : query},
+              {
+                '$lookup':
+                 {
+                   from: joinCollecion,
+                   localField: localField,
+                   foreignField: foreignField,
+                   as: alias
+                 }
+               },
+               { '$limit': limit },
+               { '$skip': skip },
+               { '$sort': sort }
+             ]).toArray(function(err, res) {
+              if (err) throw err;
+              resolve(res);
+              db.close();
+            });
+        });
+    });
+    return promise;
+  }
+
   createObjectId(){
       return new ObjectID();
   }
@@ -12,6 +64,20 @@ export default class bannerDocument {
       return null;
     }
     return ObjectID.isValid(id) ? ObjectID(id) : null;
+  }
+
+  delete(collection, query){
+    var promise = new Promise(function(resolve, reject){
+      dbs.connect(config.connectionString, function(err, db){
+            if (err)  reject(err);
+            db.collection(collection).remove(query,function(err, result) {
+            if (err)  reject(err);
+            resolve(result);
+            db.close();
+          });
+        });
+    });
+    return promise;
   }
 
   getCount(collection, query){

@@ -23,9 +23,8 @@ export default class Index extends React.Component {
       <div>
         <IndexHeader/>
         <IndexBanner/>
-
-
         <IndexNewArrival/>
+        <IndexSchedule/>
         <ImportJs/>
       </div>
     );

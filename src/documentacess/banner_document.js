@@ -11,7 +11,6 @@ export default class bannerDocument {
   }
 
   updateOne(b){
-    console.log(b);
     const baseDocument = new BaseDocument();
     const collection = 'banner';
     const query = {'_id': b._id};

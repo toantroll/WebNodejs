@@ -23,9 +23,9 @@ router.route('/auth') // on routes for /This
         if(user.user_name != undefined){
            // create a token
           var token = jwt.sign(user, config.secret, {
-            expiresIn: 2880 // expires in 24 hours
+            expiresIn: "2d"
           });
-            res.cookie(config.cookieKey, token, { maxAge: 9000000, httpOnly: true });
+            res.cookie(config.cookieKey, token, { maxAge: 86400000*2, httpOnly: true });
             res.json({auth: true, message: 'success', token: token});
 
         } else {

@@ -7,6 +7,7 @@ import AddProduct from './add_product';
 import ManageCategory from './manage_category';
 import ManageBanner from './manage_banner';
 import ListProdcuts from './list_product';
+import ListCheckOut from './list_checkout';
 import checkAuth from '../../../service/common/check-auth.js';
 
 export default class DashBoardPage extends React.Component {
@@ -34,13 +35,15 @@ export default class DashBoardPage extends React.Component {
 	render(){
 		const route = this.state.route;
 		var data;
-		if(route==='add-product'){
-			data = <AddProduct/>;
-		} else if(route==='manage-category'){
+		if(route==='manage-category'){
 			data = <ManageCategory/>;
 		} else if(route==='manage-banner'){
 			data = <ManageBanner/>;
 		} else if(route==='list-product') {
+			data = <ListProdcuts/>;
+		} else if(route==='list-checkout') {
+			data = <ListCheckOut/>;
+		} else {
 			data = <ListProdcuts/>;
 		}
 		return(

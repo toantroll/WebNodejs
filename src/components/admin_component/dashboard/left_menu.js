@@ -22,19 +22,19 @@ export default class DashBoardPage extends React.Component {
 					</a>
 				</li>
 				<li className="start ">
-					<a href="/manage-category">
+					<a href="/admin/dashboard/manage-category">
 					<i className="icon-home"></i>
 					<span className="title">Quản lý danh mục</span>
 					</a>
 				</li>
 				<li className="start ">
-					<a href="/list-product">
+					<a href="/admin/dashboard/list-product">
 					<i className="icon-home"></i>
 					<span className="title">Quản lý sản phẩm</span>
 					</a>
 				</li>
 				<li className="start ">
-					<a href="/manage-banner">
+					<a href="/admin/dashboard/manage-banner">
 					<i className="icon-home"></i>
 					<span className="title">Quản lý banner</span>
 					</a>

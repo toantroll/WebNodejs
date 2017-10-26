@@ -204,7 +204,7 @@ export default class IndexNewArrival extends React.Component{
       for(i; i <data.length; i++){
         var cateName = data[i].cateName;
         liArray.push(<RenderLi classNameLi={classNameLi} aria={aria} cateName={cateName}/>);
-        tabArray.push(<RenderHeaderTab aria={aria}  cateName={cateName} classH2={classH2}/>)
+        //tabArray.push(<RenderHeaderTab aria={aria}  cateName={cateName} classH2={classH2}/>)
         tabArray.push(<RenderTab onClick={this.checkOutHandle} data={data[i].data} aria={aria} classDivTab={classDivTab} />);
         classNameLi = "resp-tab-item ";
         aria = "tab_item-"+(i+1);
