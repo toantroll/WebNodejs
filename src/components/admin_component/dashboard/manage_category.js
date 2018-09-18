@@ -41,7 +41,7 @@ function RenderForm(props){
 export default class ManageCategory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data:[],modal:{cateId:'', cateName:'', parent:'0'}, errorForm:{cateName:'', img:''}};
+    this.state = {data:null,modal:{cateId:'', cateName:'', parent:'0'}, errorForm:{cateName:'', img:''}};
     this.onClickHandle = this.onClickHandle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getAllCategory = this.getAllCategory.bind(this);
@@ -142,7 +142,7 @@ export default class ManageCategory extends React.Component {
 
   render(){
     const data = this.state.data;
-    if(data.length === 0){
+    if(data == null){
       return(<Loading/>);
     } else {
       var category = [];

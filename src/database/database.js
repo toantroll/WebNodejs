@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 ObjectID = require('mongodb').ObjectID
-var url = "mongodb://toantroll2305:anlolnhe@ds147544.mlab.com:47544/shoes_shop";
+var url = "mongodb://toantroll2305:anlolnhe1@ds147544.mlab.com:47544/shoes_shop";
 
 MongoClient.connect(url, function(err, db) {
 if (err) throw err;
